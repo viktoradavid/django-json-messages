@@ -7,9 +7,9 @@ register = template.Library()
 
 @register.simple_tag(takes_context=True)
 def json_messages(context):
-	for m in context['json_messages']:
+	for m in context.get('json_messages',[]):
 		m['msg'] = django.utils.html.escapejs(m['msg'])	
-	json_dump = json.dumps(context['json_messages'])
+	json_dump = json.dumps(context.get('json_messages'))
 	return json_dump
 
 @register.simple_tag(takes_context=True)
