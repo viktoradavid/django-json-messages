@@ -1,7 +1,6 @@
 from django import template
 import json
 import django.utils.html
-import django.utils.safestring
 
 register = template.Library()
 
@@ -10,7 +9,7 @@ def json_messages(context):
 	for m in context.get('json_messages',[]):
 		m['msg'] = django.utils.html.escapejs(m['msg'])	
 	json_dump = json.dumps(context.get('json_messages'))
-	return json_dump
+	return django.utils.html.mark_safe(json_dump)
 
 @register.simple_tag(takes_context=True)
 def json_messages_script(context, on_window=True, js_variable='messages'):
@@ -21,4 +20,4 @@ def json_messages_script(context, on_window=True, js_variable='messages'):
 		variable_definition = 'var {}'
 
 	variable_definition = variable_definition.format(js_variable)
-	return script.format(variable_definition=variable_definition, dump=json_messages(context))
+	return django.utils.html.mark_safe(script.format(variable_definition=variable_definition, dump=json_messages(context)))

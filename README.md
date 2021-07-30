@@ -1,6 +1,8 @@
 # django-json-messages
 Add json encoded messages (from Django messages framework) to templates
 
+Updated for python3.9 and Django3.2
+
 # Install
 
 ```sh
